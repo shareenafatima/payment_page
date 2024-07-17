@@ -1,15 +1,246 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+ body {
+    font-family: Arial, sans-serif;
+    margin: 60px auto;
+    padding: 80px;
+    background-color: white;
+}
+
+.container {
+    border-radius: 12px;
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+#heading {
+    font-size: 20px;
+}
+
+.session-details {
+    padding: 10px;
+    border-right: 1px solid #ddd;
+    width: 33.33%;
+    flex: none;
+}
+
+.form-container {
+    padding: 30px;
+    padding-top: 0;
+    width: 66.67%;
+    flex: none;
+}
+
+.details {
+    color: #808080;
+}
+
+.session-details h2 {
+    margin: 10px 0;
+}
+
+.session-details p {
+    font-family: sans-serif;
+    margin: 24px 0;
+    color: rgba(26, 26, 26, 0.61);
+    font-weight: bold;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    width: 60%;
+    margin: 10px 0 5px;
+}
+
+input, textarea, #card-element {
+    width: 60%;
+    padding: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid rgb(185, 185, 185);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+input:focus, textarea:focus, #card-element:focus {
+    border-color: #00a79d;
+    border-width: 2px;
+    outline: none;
+}
+
+button {
+    width: 150px;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #00a79d;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #007f74;
+}
+
+.back-button {
+    padding: 10px;
+    margin-top: 20px;
+    background-color: white;
+    color: #00a79d;
+    border: 1px solid rgb(223, 222, 222);
+    border-radius: 50%;
+    font-size: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+}
+
+.back-button:hover {
+    background-color: #f0f8f7;
+}
+
+.logo {
+    margin-top: 20px;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.session-details h4 {
+    margin-top: 5px;
+    color: grey;
+}
+
+.payment-info-container {
+    padding: 20px;
+    padding-top: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    width: 55%;
+}
+
+.payment-info-container input, #card-element {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    box-sizing: border-box;
+}
+
+#card-errors {
+    color: red;
+    margin-top: 10px;
+}
+
+
+/* Responsive styling for screens below 1040px */
+@media (max-width: 1040px) {
+
+    .container {
+        flex-direction: column;
+        padding-left: 50px;
+        
+    }
+
+    .session-details {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .form-container {
+        width: 100%;
+        align-items: center;
+    }
+
+
+     input, textarea{
+        width: 70%;
+    }
+
+    #card-element {
+        width: 100%;
+    }
+
+    .payment-info-container {
+        width: 70%;
+    }
+}
+
+
+/* Responsive styling for screens below 660px */
+@media (max-width: 660px) {
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0px auto;
+        padding: 0px;
+        background-color: white;
+    }
+    .container {
+        flex-direction: column;
+        padding-left: 0px;
+        padding: 50px;
+        display: flex;
+        border-radius: 0;
+        
+    }
+
+    .session-details {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .form-container {
+        width: 100%;
+        align-items: center;
+    }
+
+
+     input, textarea{
+        width: 85%;
+    }
+
+    #card-element {
+        width: 100%;
+    }
+
+    .payment-info-container {
+        width: 75%;
+    }
+    .back-button{
+        display: none;
+    }
+    .logo{
+        display: none;
+    }
+    .session-details h4 {
+       display: none;
+    }
+    label {
+        display: block;
+        width: 80%;
+        margin: 10px 0 5px;
+    }
+}

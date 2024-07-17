@@ -1,0 +1,110 @@
+<html>
+<head>
+  <title>Payment</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+</head>
+<body>
+    <div class="container">
+        <div class="session-details">
+            <!-- Back Button -->
+            <button id="back-button" class="back-button"><i class="fas fa-arrow-left"></i></button>
+            <img src="logo.jpg" alt="Logo" class="logo">
+            <h4>A. Health Consultation</h4>
+            <h2>CAMHS Consultation Session</h2>
+            <p><i class="fas fa-clock"></i> 1 hr 30 min</p>
+            <p><i class="fas fa-credit-card"></i> <span id="price"></span></p>
+            <p><i class="fas fa-map-marker-alt"></i> United Kingdom</p>
+        </div>
+        <div class="form-container">
+            <form id="payment-form">
+                <div id="heading"><p>Enter Details</p></div>
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+                 
+                <label for="phone1">Phone Number *</label>
+                <input type="tel" id="phone1" name="phone1" required>
+
+                <label for="comments">Please share anything that will help prepare for our meeting.</label>
+                <textarea id="comments" name="comments"></textarea>
+
+                <label for="phone2">Send text messages to</label>
+                <input type="tel" id="phone2" name="phone2" required>
+
+                <label for="payment-info">Payment Information *</label>
+                <div class="payment-info-container">
+                    <p>Price: <span id="price-duplicate"></span></p>
+                    <label for="card-name">Name on card</label>
+                    <input type="text" id="card-name" name="card-name" required>
+                    <div id="card-element">
+                        <!-- Stripe Element will be inserted here. -->
+                    </div>
+                    <!-- Used to display form errors. -->
+                    <div id="card-errors" role="alert"></div>
+                </div>
+                <button type="submit">Schedule Event</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>');
+        var elements = stripe.elements();
+        
+        var style = {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        };
+
+        var card = elements.create('card', {style: style});
+        card.mount('#card-element');
+
+        var form = document.getElementById('payment-form');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+        function stripeTokenHandler(token) {
+            var hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+            form.submit();
+        }
+
+        // Insert the price
+        const price = '490';
+        document.getElementById('price').innerText = `£${price} GBP`;
+        document.getElementById('price-duplicate').innerText = `£${price} GBP`;
+    });
+    </script>
+</body>
+</html>
