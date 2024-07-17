@@ -1,4 +1,6 @@
 class PaymentsController < ApplicationController
+  protect_from_forgery except: :create
+
   def new
   end
 
@@ -14,11 +16,19 @@ class PaymentsController < ApplicationController
       customer: customer.id,
       amount: @amount,
       description: 'CAMHS Consultation Session',
-      currency: 'gbp'
+      currency: 'gbp',
+      metadata: {
+        name: params[:name],
+        phone1: params[:phone1],
+        comments: params[:comments]
+      }
     )
 
-    rescue Stripe::CardError => e
-      flash[:error] = e.message
-      redirect_to root_path
+    flash[:notice] = 'Payment successful!'
+    redirect_to root_path
+
+  rescue Stripe::CardError => e
+    flash[:error] = e.message
+    redirect_to root_path
   end
 end
